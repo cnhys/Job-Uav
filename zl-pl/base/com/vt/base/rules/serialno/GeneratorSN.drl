@@ -1,0 +1,28 @@
+package com.vt.base.rules.serialno
+ 
+import com.vt.base.model.BasSerialno;
+import org.apache.commons.lang3.StringUtils;
+import com.vt.base.service.IGeneratorSerialNoService;
+//全局变量
+global IGeneratorSerialNoService serialService;
+//交易码为空
+rule "default-rule"
+no-loop true
+    when
+        m : BasSerialno( serialnoCode == null)
+    then
+    	System.out.println("default-rule================");
+    	int value = 100;
+    	m.setSerialNo(""+(value+1) );
+        update( m );
+end 
+//交易码是txno 10位数字，左补零
+rule "txno-rule"
+no-loop true
+    when
+        m : BasSerialno( serialnoCode  == "txno")
+    then
+    	System.out.println("txno-rule================");
+    	m.setSerialNo( "txno"+StringUtils.leftPad(String.valueOf(serialService.getSerialnoByTradeCode(m.getSerialnoCode())+1),10,"0") );
+        update( m );
+end

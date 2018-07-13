@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+    <!-- 通过注解定义bean。默认同时也通过注解自动注入 -->
+    <context:component-scan base-package="com.vt"/>
+    <!-- annotation driven -->
+    <context:annotation-config/>
+    <!-- component scan
+    <context:component-scan base-package="com.vt.**.service.impl" />-->
+    <!-- error code define -->
+    <context:property-placeholder order="3" file-encoding="UTF-8"
+                                  system-properties-mode="OVERRIDE"
+                                  location="classpath:error-code.properties"/>
+    <!-- application properties -->
+    <context:property-placeholder order="1" file-encoding="UTF-8"
+                                  system-properties-mode="OVERRIDE"
+                                  location="classpath*:application.properties"/>
+    <!-- datasource -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+    	<property name="filters" value="config" />
+    	
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/signature?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        
+       	<!-- 
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@111.230.242.15:1521:uav"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+         -->
+         
+         
+        
+        <!-- pool size -->
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="5"/>
+        <property name="maxActive" value="100"/>
+        <!-- time settings -->
+        <property name="maxWait" value="60000"/>
+        <property name="validationQuery" value="select 1 FROM DUAL"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+    </bean>
+    <!-- transaction manager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="defaultTimeout" value="3000"/>
+        <property name="failEarlyOnGlobalRollbackOnly" value="true"/>
+        <property name="globalRollbackOnParticipationFailure" value="true"/>
+        <property name="nestedTransactionAllowed" value="true"/>
+        <property name="rollbackOnCommitFailure" value="true"/>
+        <property name="validateExistingTransaction" value="true"/>
+    </bean>
+    <!-- transaction -->
+    <tx:annotation-driven mode="proxy" transaction-manager="transactionManager"/>
+    <!-- mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:**/mapper/*.xml"/>
+    </bean>
+    <!-- SQL Session -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage"
+                  value="com.vt.base.client,com.vt.org.client,com.vt.post.client,com.vt.resource.client,com.vt.role.client,com.vt.user.client,com.vt.fencing.client"/>
+        <property name="markerInterface" value="com.vt.base.mapper.ISuperMapper"/>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 文件上传的最大size -->
+        <property name="maxUploadSize" value="10485760000"/>
+        <!-- 允许文件写入内存的最大size -->
+        <property name="maxInMemorySize" value="10240000"/>
+    </bean>
+    
+    
+    <!-- 定义视图文件解析 -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean> -->
+</beans>

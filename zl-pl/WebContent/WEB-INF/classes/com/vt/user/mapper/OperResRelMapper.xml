@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vt.user.client.OperResRelMapper">
+    <resultMap id="BaseResultMap" type="com.vt.user.model.OperResRel">
+        <result column="OPERATOR_ID" jdbcType="DECIMAL" property="operatorId"/>
+        <result column="RES_ID" jdbcType="DECIMAL" property="resId"/>
+        <result column="AUTH_TYPE" jdbcType="CHAR" property="authType"/>
+        <result column="FIELD1" jdbcType="VARCHAR" property="field1"/>
+        <result column="FIELD2" jdbcType="VARCHAR" property="field2"/>
+        <result column="FIELD3" jdbcType="VARCHAR" property="field3"/>
+        <result column="FIELD4" jdbcType="VARCHAR" property="field4"/>
+        <result column="FIELD5" jdbcType="VARCHAR" property="field5"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        OPERATOR_ID, RES_ID, AUTH_TYPE, FIELD1, FIELD2, FIELD3, FIELD4, FIELD5
+    </sql>
+    <select id="selectByExample" parameterType="com.vt.user.model.OperResRelExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from T_PM_OPER_RES_REL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <delete id="deleteByExample" parameterType="com.vt.user.model.OperResRelExample">
+        delete from T_PM_OPER_RES_REL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.user.model.OperResRel">
+        insert into T_PM_OPER_RES_REL (OPERATOR_ID, RES_ID, AUTH_TYPE,
+        FIELD1, FIELD2, FIELD3,
+        FIELD4, FIELD5)
+        values (#{operatorId,jdbcType=DECIMAL}, #{resId,jdbcType=DECIMAL}, #{authType,jdbcType=CHAR},
+        #{field1,jdbcType=VARCHAR}, #{field2,jdbcType=VARCHAR}, #{field3,jdbcType=VARCHAR},
+        #{field4,jdbcType=VARCHAR}, #{field5,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.user.model.OperResRel">
+        insert into T_PM_OPER_RES_REL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operatorId != null">
+                OPERATOR_ID,
+            </if>
+            <if test="resId != null">
+                RES_ID,
+            </if>
+            <if test="authType != null">
+                AUTH_TYPE,
+            </if>
+            <if test="field1 != null">
+                FIELD1,
+            </if>
+            <if test="field2 != null">
+                FIELD2,
+            </if>
+            <if test="field3 != null">
+                FIELD3,
+            </if>
+            <if test="field4 != null">
+                FIELD4,
+            </if>
+            <if test="field5 != null">
+                FIELD5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operatorId != null">
+                #{operatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="resId != null">
+                #{resId,jdbcType=DECIMAL},
+            </if>
+            <if test="authType != null">
+                #{authType,jdbcType=CHAR},
+            </if>
+            <if test="field1 != null">
+                #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                #{field5,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.user.model.OperResRelExample" resultType="java.lang.Integer">
+        select count(*) from T_PM_OPER_RES_REL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vt.org.client.OrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.vt.org.model.Organization">
+        <id column="ORG_ID" jdbcType="INTEGER" property="orgId"/>
+        <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="ORG_NAME_EN" jdbcType="VARCHAR" property="orgNameEn"/>
+        <result column="ORG_LEVEL" jdbcType="VARCHAR" property="orgLevel"/>
+        <result column="PARENT_ORG_ID" jdbcType="INTEGER" property="parentOrgId"/>
+        <result column="ORG_SERIALNO" jdbcType="INTEGER" property="orgSerialno"/>
+        <result column="ORG_SEQ" jdbcType="VARCHAR" property="orgSeq"/>
+        <result column="ORG_TYPE" jdbcType="VARCHAR" property="orgType"/>
+        <result column="ORG_ADDRESS" jdbcType="VARCHAR" property="orgAddress"/>
+        <result column="ZIP_CODE" jdbcType="VARCHAR" property="zipCode"/>
+        <result column="CONTACTS" jdbcType="VARCHAR" property="contacts"/>
+        <result column="CONTACT_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="E_MAIL" jdbcType="VARCHAR" property="eMail"/>
+        <result column="FAX_PHONE" jdbcType="VARCHAR" property="faxPhone"/>
+        <result column="WEB_SITE" jdbcType="VARCHAR" property="webSite"/>
+        <result column="EFFECT_DATE" jdbcType="DATE" property="effectDate"/>
+        <result column="INVALID_DATE" jdbcType="DATE" property="invalidDate"/>
+        <result column="ORG_STATE" jdbcType="VARCHAR" property="orgState"/>
+        <result column="REGION" jdbcType="VARCHAR" property="region"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="CREATE_TIME" jdbcType="DATE" property="createTime"/>
+        <result column="LAST_MODFIY_TIME" jdbcType="TIMESTAMP" property="lastModfiyTime"/>
+        <result column="LAST_MODIFY_USER" jdbcType="VARCHAR" property="lastModifyUser"/>
+        <result column="FIELD1" jdbcType="INTEGER" property="field1"/>
+        <result column="FIELD2" jdbcType="INTEGER" property="field2"/>
+        <result column="FIELD3" jdbcType="INTEGER" property="field3"/>
+        <result column="FIELD4" jdbcType="VARCHAR" property="field4"/>
+        <result column="FIELD5" jdbcType="VARCHAR" property="field5"/>
+        <result column="FIELD6" jdbcType="VARCHAR" property="field6"/>
+        <result column="FIELD7" jdbcType="VARCHAR" property="field7"/>
+        <result column="FIELD8" jdbcType="VARCHAR" property="field8"/>
+        <result column="FIELD9" jdbcType="VARCHAR" property="field9"/>
+        <result column="FIELD10" jdbcType="VARCHAR" property="field10"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        ORG_ID, ORG_CODE, ORG_NAME, ORG_NAME_EN, ORG_LEVEL, PARENT_ORG_ID, ORG_SERIALNO,
+        ORG_SEQ, ORG_TYPE, ORG_ADDRESS, ZIP_CODE, CONTACTS, CONTACT_PHONE, E_MAIL, FAX_PHONE,
+        WEB_SITE, EFFECT_DATE, INVALID_DATE, ORG_STATE, REGION, REMARK, CREATE_TIME, LAST_MODFIY_TIME,
+        LAST_MODIFY_USER, FIELD1, FIELD2, FIELD3, FIELD4, FIELD5, FIELD6, FIELD7, FIELD8,
+        FIELD9, FIELD10
+    </sql>
+    <select id="selectByExample" parameterType="com.vt.org.model.OrganizationExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from T_PM_ORGANIZATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from T_PM_ORGANIZATION
+        where ORG_ID = #{orgId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from T_PM_ORGANIZATION
+        where ORG_ID = #{orgId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vt.org.model.OrganizationExample">
+        delete from T_PM_ORGANIZATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.org.model.Organization">
+        insert into T_PM_ORGANIZATION (ORG_ID, ORG_CODE, ORG_NAME,
+        ORG_NAME_EN, ORG_LEVEL, PARENT_ORG_ID,
+        ORG_SERIALNO, ORG_SEQ, ORG_TYPE,
+        ORG_ADDRESS, ZIP_CODE, CONTACTS,
+        CONTACT_PHONE, E_MAIL, FAX_PHONE,
+        WEB_SITE, EFFECT_DATE, INVALID_DATE,
+        ORG_STATE, REGION, REMARK,
+        CREATE_TIME, LAST_MODFIY_TIME, LAST_MODIFY_USER,
+        FIELD1, FIELD2, FIELD3,
+        FIELD4, FIELD5, FIELD6,
+        FIELD7, FIELD8, FIELD9,
+        FIELD10)
+        values (#{orgId,jdbcType=INTEGER}, #{orgCode,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR},
+        #{orgNameEn,jdbcType=VARCHAR}, #{orgLevel,jdbcType=VARCHAR}, #{parentOrgId,jdbcType=INTEGER},
+        #{orgSerialno,jdbcType=INTEGER}, #{orgSeq,jdbcType=VARCHAR}, #{orgType,jdbcType=VARCHAR},
+        #{orgAddress,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR},
+        #{contactPhone,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, #{faxPhone,jdbcType=VARCHAR},
+        #{webSite,jdbcType=VARCHAR}, #{effectDate,jdbcType=DATE}, #{invalidDate,jdbcType=DATE},
+        #{orgState,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+        #{createTime,jdbcType=DATE}, #{lastModfiyTime,jdbcType=TIMESTAMP}, #{lastModifyUser,jdbcType=VARCHAR},
+        #{field1,jdbcType=INTEGER}, #{field2,jdbcType=INTEGER}, #{field3,jdbcType=INTEGER},
+        #{field4,jdbcType=VARCHAR}, #{field5,jdbcType=VARCHAR}, #{field6,jdbcType=VARCHAR},
+        #{field7,jdbcType=VARCHAR}, #{field8,jdbcType=VARCHAR}, #{field9,jdbcType=VARCHAR},
+        #{field10,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.org.model.Organization">
+        insert into T_PM_ORGANIZATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgId != null">
+                ORG_ID,
+            </if>
+            <if test="orgCode != null">
+                ORG_CODE,
+            </if>
+            <if test="orgName != null">
+                ORG_NAME,
+            </if>
+            <if test="orgNameEn != null">
+                ORG_NAME_EN,
+            </if>
+            <if test="orgLevel != null">
+                ORG_LEVEL,
+            </if>
+            <if test="parentOrgId != null">
+                PARENT_ORG_ID,
+            </if>
+            <if test="orgSerialno != null">
+                ORG_SERIALNO,
+            </if>
+            <if test="orgSeq != null">
+                ORG_SEQ,
+            </if>
+            <if test="orgType != null">
+                ORG_TYPE,
+            </if>
+            <if test="orgAddress != null">
+                ORG_ADDRESS,
+            </if>
+            <if test="zipCode != null">
+                ZIP_CODE,
+            </if>
+            <if test="contacts != null">
+                CONTACTS,
+            </if>
+            <if test="contactPhone != null">
+                CONTACT_PHONE,
+            </if>
+            <if test="eMail != null">
+                E_MAIL,
+            </if>
+            <if test="faxPhone != null">
+                FAX_PHONE,
+            </if>
+            <if test="webSite != null">
+                WEB_SITE,
+            </if>
+            <if test="effectDate != null">
+                EFFECT_DATE,
+            </if>
+            <if test="invalidDate != null">
+                INVALID_DATE,
+            </if>
+            <if test="orgState != null">
+                ORG_STATE,
+            </if>
+            <if test="region != null">
+                REGION,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="lastModfiyTime != null">
+                LAST_MODFIY_TIME,
+            </if>
+            <if test="lastModifyUser != null">
+                LAST_MODIFY_USER,
+            </if>
+            <if test="field1 != null">
+                FIELD1,
+            </if>
+            <if test="field2 != null">
+                FIELD2,
+            </if>
+            <if test="field3 != null">
+                FIELD3,
+            </if>
+            <if test="field4 != null">
+                FIELD4,
+            </if>
+            <if test="field5 != null">
+                FIELD5,
+            </if>
+            <if test="field6 != null">
+                FIELD6,
+            </if>
+            <if test="field7 != null">
+                FIELD7,
+            </if>
+            <if test="field8 != null">
+                FIELD8,
+            </if>
+            <if test="field9 != null">
+                FIELD9,
+            </if>
+            <if test="field10 != null">
+                FIELD10,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgId != null">
+                #{orgId,jdbcType=INTEGER},
+            </if>
+            <if test="orgCode != null">
+                #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orgName != null">
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="orgNameEn != null">
+                #{orgNameEn,jdbcType=VARCHAR},
+            </if>
+            <if test="orgLevel != null">
+                #{orgLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="parentOrgId != null">
+                #{parentOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="orgSerialno != null">
+                #{orgSerialno,jdbcType=INTEGER},
+            </if>
+            <if test="orgSeq != null">
+                #{orgSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="orgType != null">
+                #{orgType,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAddress != null">
+                #{orgAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="eMail != null">
+                #{eMail,jdbcType=VARCHAR},
+            </if>
+            <if test="faxPhone != null">
+                #{faxPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="webSite != null">
+                #{webSite,jdbcType=VARCHAR},
+            </if>
+            <if test="effectDate != null">
+                #{effectDate,jdbcType=DATE},
+            </if>
+            <if test="invalidDate != null">
+                #{invalidDate,jdbcType=DATE},
+            </if>
+            <if test="orgState != null">
+                #{orgState,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="lastModfiyTime != null">
+                #{lastModfiyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastModifyUser != null">
+                #{lastModifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                #{field1,jdbcType=INTEGER},
+            </if>
+            <if test="field2 != null">
+                #{field2,jdbcType=INTEGER},
+            </if>
+            <if test="field3 != null">
+                #{field3,jdbcType=INTEGER},
+            </if>
+            <if test="field4 != null">
+                #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                #{field6,jdbcType=VARCHAR},
+            </if>
+            <if test="field7 != null">
+                #{field7,jdbcType=VARCHAR},
+            </if>
+            <if test="field8 != null">
+                #{field8,jdbcType=VARCHAR},
+            </if>
+            <if test="field9 != null">
+                #{field9,jdbcType=VARCHAR},
+            </if>
+            <if test="field10 != null">
+                #{field10,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.org.model.OrganizationExample" resultType="java.lang.Integer">
+        select count(*) from T_PM_ORGANIZATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vt.org.model.Organization">
+        update T_PM_ORGANIZATION
+        <set>
+            <if test="orgCode != null">
+                ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orgName != null">
+                ORG_NAME = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="orgNameEn != null">
+                ORG_NAME_EN = #{orgNameEn,jdbcType=VARCHAR},
+            </if>
+            <if test="orgLevel != null">
+                ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="parentOrgId != null">
+                PARENT_ORG_ID = #{parentOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="orgSerialno != null">
+                ORG_SERIALNO = #{orgSerialno,jdbcType=INTEGER},
+            </if>
+            <if test="orgSeq != null">
+                ORG_SEQ = #{orgSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="orgType != null">
+                ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAddress != null">
+                ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                CONTACTS = #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="eMail != null">
+                E_MAIL = #{eMail,jdbcType=VARCHAR},
+            </if>
+            <if test="faxPhone != null">
+                FAX_PHONE = #{faxPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="webSite != null">
+                WEB_SITE = #{webSite,jdbcType=VARCHAR},
+            </if>
+            <if test="effectDate != null">
+                EFFECT_DATE = #{effectDate,jdbcType=DATE},
+            </if>
+            <if test="invalidDate != null">
+                INVALID_DATE = #{invalidDate,jdbcType=DATE},
+            </if>
+            <if test="orgState != null">
+                ORG_STATE = #{orgState,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                REGION = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=DATE},
+            </if>
+            <if test="lastModfiyTime != null">
+                LAST_MODFIY_TIME = #{lastModfiyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastModifyUser != null">
+                LAST_MODIFY_USER = #{lastModifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                FIELD1 = #{field1,jdbcType=INTEGER},
+            </if>
+            <if test="field2 != null">
+                FIELD2 = #{field2,jdbcType=INTEGER},
+            </if>
+            <if test="field3 != null">
+                FIELD3 = #{field3,jdbcType=INTEGER},
+            </if>
+            <if test="field4 != null">
+                FIELD4 = #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                FIELD5 = #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                FIELD6 = #{field6,jdbcType=VARCHAR},
+            </if>
+            <if test="field7 != null">
+                FIELD7 = #{field7,jdbcType=VARCHAR},
+            </if>
+            <if test="field8 != null">
+                FIELD8 = #{field8,jdbcType=VARCHAR},
+            </if>
+            <if test="field9 != null">
+                FIELD9 = #{field9,jdbcType=VARCHAR},
+            </if>
+            <if test="field10 != null">
+                FIELD10 = #{field10,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ORG_ID = #{orgId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vt.org.model.Organization">
+        update T_PM_ORGANIZATION
+        set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+        ORG_NAME_EN = #{orgNameEn,jdbcType=VARCHAR},
+        ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR},
+        PARENT_ORG_ID = #{parentOrgId,jdbcType=INTEGER},
+        ORG_SERIALNO = #{orgSerialno,jdbcType=INTEGER},
+        ORG_SEQ = #{orgSeq,jdbcType=VARCHAR},
+        ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+        ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+        ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+        CONTACTS = #{contacts,jdbcType=VARCHAR},
+        CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+        E_MAIL = #{eMail,jdbcType=VARCHAR},
+        FAX_PHONE = #{faxPhone,jdbcType=VARCHAR},
+        WEB_SITE = #{webSite,jdbcType=VARCHAR},
+        EFFECT_DATE = #{effectDate,jdbcType=DATE},
+        INVALID_DATE = #{invalidDate,jdbcType=DATE},
+        ORG_STATE = #{orgState,jdbcType=VARCHAR},
+        REGION = #{region,jdbcType=VARCHAR},
+        REMARK = #{remark,jdbcType=VARCHAR},
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+        LAST_MODFIY_TIME = #{lastModfiyTime,jdbcType=TIMESTAMP},
+        LAST_MODIFY_USER = #{lastModifyUser,jdbcType=VARCHAR},
+        FIELD1 = #{field1,jdbcType=INTEGER},
+        FIELD2 = #{field2,jdbcType=INTEGER},
+        FIELD3 = #{field3,jdbcType=INTEGER},
+        FIELD4 = #{field4,jdbcType=VARCHAR},
+        FIELD5 = #{field5,jdbcType=VARCHAR},
+        FIELD6 = #{field6,jdbcType=VARCHAR},
+        FIELD7 = #{field7,jdbcType=VARCHAR},
+        FIELD8 = #{field8,jdbcType=VARCHAR},
+        FIELD9 = #{field9,jdbcType=VARCHAR},
+        FIELD10 = #{field10,jdbcType=VARCHAR}
+        where ORG_ID = #{orgId,jdbcType=INTEGER}
+    </update>
+</mapper>

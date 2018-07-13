@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vt.base.client.LoggingMapper">
+    <resultMap id="BaseResultMap" type="com.vt.base.model.Logging">
+        <id column="LOG_ID" property="logId" jdbcType="DECIMAL"/>
+        <result column="LOG_NAME" property="logName" jdbcType="VARCHAR"/>
+        <result column="TRIGGER_EVENT" property="triggerEvent" jdbcType="VARCHAR"/>
+        <result column="OPER_CODE" property="operCode" jdbcType="VARCHAR"/>
+        <result column="LOG_DESC" property="logDesc" jdbcType="VARCHAR"/>
+        <result column="IP" property="ip" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="OPER_TIME" property="operTime" jdbcType="TIMESTAMP"/>
+        <result column="LOG_TYPE" property="logType" jdbcType="VARCHAR"/>
+        <result column="FIELD1" property="field1" jdbcType="VARCHAR"/>
+        <result column="FIELD2" property="field2" jdbcType="VARCHAR"/>
+        <result column="FIELD3" property="field3" jdbcType="VARCHAR"/>
+        <result column="FIELD4" property="field4" jdbcType="VARCHAR"/>
+        <result column="FIELD5" property="field5" jdbcType="VARCHAR"/>
+        <result column="FIELD6" property="field6" jdbcType="VARCHAR"/>
+        <result column="FIELD7" property="field7" jdbcType="VARCHAR"/>
+        <result column="FIELD8" property="field8" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        LOG_ID, LOG_NAME, TRIGGER_EVENT, OPER_CODE, LOG_DESC, IP, ORG_ID, OPER_TIME, LOG_TYPE,
+        FIELD1, FIELD2, FIELD3, FIELD4, FIELD5, FIELD6, FIELD7, FIELD8
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vt.base.model.LoggingExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from T_BAS_LOGGING
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select
+        <include refid="Base_Column_List"/>
+        from T_BAS_LOGGING
+        where LOG_ID = #{logId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+        delete from T_BAS_LOGGING
+        where LOG_ID = #{logId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vt.base.model.LoggingExample">
+        delete from T_BAS_LOGGING
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.base.model.Logging">
+        insert into T_BAS_LOGGING (LOG_ID, LOG_NAME, TRIGGER_EVENT,
+        OPER_CODE, LOG_DESC, IP,
+        ORG_ID, OPER_TIME, LOG_TYPE,
+        FIELD1, FIELD2, FIELD3,
+        FIELD4, FIELD5, FIELD6,
+        FIELD7, FIELD8)
+        values (#{logId,jdbcType=DECIMAL}, #{logName,jdbcType=VARCHAR}, #{triggerEvent,jdbcType=VARCHAR},
+        #{operCode,jdbcType=VARCHAR}, #{logDesc,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
+        #{orgId,jdbcType=VARCHAR}, #{operTime,jdbcType=TIMESTAMP}, #{logType,jdbcType=VARCHAR},
+        #{field1,jdbcType=VARCHAR}, #{field2,jdbcType=VARCHAR}, #{field3,jdbcType=VARCHAR},
+        #{field4,jdbcType=VARCHAR}, #{field5,jdbcType=VARCHAR}, #{field6,jdbcType=VARCHAR},
+        #{field7,jdbcType=VARCHAR}, #{field8,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.base.model.Logging">
+        insert into T_BAS_LOGGING
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="logName != null">
+                LOG_NAME,
+            </if>
+            <if test="triggerEvent != null">
+                TRIGGER_EVENT,
+            </if>
+            <if test="operCode != null">
+                OPER_CODE,
+            </if>
+            <if test="logDesc != null">
+                LOG_DESC,
+            </if>
+            <if test="ip != null">
+                IP,
+            </if>
+            <if test="orgId != null">
+                ORG_ID,
+            </if>
+            <if test="operTime != null">
+                OPER_TIME,
+            </if>
+            <if test="logType != null">
+                LOG_TYPE,
+            </if>
+            <if test="field1 != null">
+                FIELD1,
+            </if>
+            <if test="field2 != null">
+                FIELD2,
+            </if>
+            <if test="field3 != null">
+                FIELD3,
+            </if>
+            <if test="field4 != null">
+                FIELD4,
+            </if>
+            <if test="field5 != null">
+                FIELD5,
+            </if>
+            <if test="field6 != null">
+                FIELD6,
+            </if>
+            <if test="field7 != null">
+                FIELD7,
+            </if>
+            <if test="field8 != null">
+                FIELD8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                #{logId,jdbcType=DECIMAL},
+            </if>
+            <if test="logName != null">
+                #{logName,jdbcType=VARCHAR},
+            </if>
+            <if test="triggerEvent != null">
+                #{triggerEvent,jdbcType=VARCHAR},
+            </if>
+            <if test="operCode != null">
+                #{operCode,jdbcType=VARCHAR},
+            </if>
+            <if test="logDesc != null">
+                #{logDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=VARCHAR},
+            </if>
+            <if test="operTime != null">
+                #{operTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logType != null">
+                #{logType,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                #{field6,jdbcType=VARCHAR},
+            </if>
+            <if test="field7 != null">
+                #{field7,jdbcType=VARCHAR},
+            </if>
+            <if test="field8 != null">
+                #{field8,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.base.model.LoggingExample" resultType="java.lang.Integer">
+        select count(*) from T_BAS_LOGGING
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vt.base.model.Logging">
+        update T_BAS_LOGGING
+        <set>
+            <if test="logName != null">
+                LOG_NAME = #{logName,jdbcType=VARCHAR},
+            </if>
+            <if test="triggerEvent != null">
+                TRIGGER_EVENT = #{triggerEvent,jdbcType=VARCHAR},
+            </if>
+            <if test="operCode != null">
+                OPER_CODE = #{operCode,jdbcType=VARCHAR},
+            </if>
+            <if test="logDesc != null">
+                LOG_DESC = #{logDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                IP = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                ORG_ID = #{orgId,jdbcType=VARCHAR},
+            </if>
+            <if test="operTime != null">
+                OPER_TIME = #{operTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logType != null">
+                LOG_TYPE = #{logType,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                FIELD1 = #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                FIELD2 = #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                FIELD3 = #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                FIELD4 = #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                FIELD5 = #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                FIELD6 = #{field6,jdbcType=VARCHAR},
+            </if>
+            <if test="field7 != null">
+                FIELD7 = #{field7,jdbcType=VARCHAR},
+            </if>
+            <if test="field8 != null">
+                FIELD8 = #{field8,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where LOG_ID = #{logId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vt.base.model.Logging">
+        update T_BAS_LOGGING
+        set LOG_NAME = #{logName,jdbcType=VARCHAR},
+        TRIGGER_EVENT = #{triggerEvent,jdbcType=VARCHAR},
+        OPER_CODE = #{operCode,jdbcType=VARCHAR},
+        LOG_DESC = #{logDesc,jdbcType=VARCHAR},
+        IP = #{ip,jdbcType=VARCHAR},
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+        OPER_TIME = #{operTime,jdbcType=TIMESTAMP},
+        LOG_TYPE = #{logType,jdbcType=VARCHAR},
+        FIELD1 = #{field1,jdbcType=VARCHAR},
+        FIELD2 = #{field2,jdbcType=VARCHAR},
+        FIELD3 = #{field3,jdbcType=VARCHAR},
+        FIELD4 = #{field4,jdbcType=VARCHAR},
+        FIELD5 = #{field5,jdbcType=VARCHAR},
+        FIELD6 = #{field6,jdbcType=VARCHAR},
+        FIELD7 = #{field7,jdbcType=VARCHAR},
+        FIELD8 = #{field8,jdbcType=VARCHAR}
+        where LOG_ID = #{logId,jdbcType=DECIMAL}
+    </update>
+</mapper>

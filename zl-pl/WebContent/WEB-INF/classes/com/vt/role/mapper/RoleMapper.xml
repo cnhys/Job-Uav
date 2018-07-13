@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vt.role.client.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.vt.role.model.Role">
+        <id column="ROLE_ID" jdbcType="DECIMAL" property="roleId"/>
+        <result column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
+        <result column="ROLE_DESC" jdbcType="VARCHAR" property="roleDesc"/>
+        <result column="MGR_ROLE_ID_LIST" jdbcType="VARCHAR" property="mgrRoleIdList"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
+        <result column="CREATE_DATE" jdbcType="DATE" property="createDate"/>
+        <result column="LASTUP_DATE" jdbcType="DATE" property="lastupDate"/>
+        <result column="FIELD1" jdbcType="VARCHAR" property="field1"/>
+        <result column="FIELD2" jdbcType="VARCHAR" property="field2"/>
+        <result column="FIELD3" jdbcType="VARCHAR" property="field3"/>
+        <result column="FIELD4" jdbcType="VARCHAR" property="field4"/>
+        <result column="FIELD5" jdbcType="VARCHAR" property="field5"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        ROLE_ID, ROLE_CODE, ROLE_NAME, ROLE_DESC, MGR_ROLE_ID_LIST, STATUS, CREATE_DATE,
+        LASTUP_DATE, FIELD1, FIELD2, FIELD3, FIELD4, FIELD5
+    </sql>
+    <select id="selectByExample" parameterType="com.vt.role.model.RoleExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from "t_pm_role"
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from "t_pm_role"
+        where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from "t_pm_role"
+        where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vt.role.model.RoleExample">
+        delete from "t_pm_role"
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.role.model.Role">
+        insert into T_PM_ROLE (ROLE_ID, ROLE_CODE, ROLE_NAME,
+        ROLE_DESC, MGR_ROLE_ID_LIST, STATUS,
+        CREATE_DATE, LASTUP_DATE, FIELD1,
+        FIELD2, FIELD3, FIELD4,
+        FIELD5)
+        values (#{roleId,jdbcType=DECIMAL}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR},
+        #{roleDesc,jdbcType=VARCHAR}, #{mgrRoleIdList,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+        #{createDate,jdbcType=DATE}, #{lastupDate,jdbcType=DATE}, #{field1,jdbcType=VARCHAR},
+        #{field2,jdbcType=VARCHAR}, #{field3,jdbcType=VARCHAR}, #{field4,jdbcType=VARCHAR},
+        #{field5,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.role.model.Role">
+        insert into T_PM_ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                ROLE_ID,
+            </if>
+            <if test="roleCode != null">
+                ROLE_CODE,
+            </if>
+            <if test="roleName != null">
+                ROLE_NAME,
+            </if>
+            <if test="roleDesc != null">
+                ROLE_DESC,
+            </if>
+            <if test="mgrRoleIdList != null">
+                MGR_ROLE_ID_LIST,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="lastupDate != null">
+                LASTUP_DATE,
+            </if>
+            <if test="field1 != null">
+                FIELD1,
+            </if>
+            <if test="field2 != null">
+                FIELD2,
+            </if>
+            <if test="field3 != null">
+                FIELD3,
+            </if>
+            <if test="field4 != null">
+                FIELD4,
+            </if>
+            <if test="field5 != null">
+                FIELD5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                #{roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="roleCode != null">
+                #{roleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null">
+                #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="mgrRoleIdList != null">
+                #{mgrRoleIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="lastupDate != null">
+                #{lastupDate,jdbcType=DATE},
+            </if>
+            <if test="field1 != null">
+                #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                #{field5,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.role.model.RoleExample" resultType="java.lang.Integer">
+        select count(*) from "t_pm_role"
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vt.role.model.Role">
+        update T_PM_ROLE
+        <set>
+            <if test="roleCode != null">
+                ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null">
+                ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="mgrRoleIdList != null">
+                MGR_ROLE_ID_LIST = #{mgrRoleIdList,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="lastupDate != null">
+                LASTUP_DATE = #{lastupDate,jdbcType=DATE},
+            </if>
+            <if test="field1 != null">
+                FIELD1 = #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                FIELD2 = #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                FIELD3 = #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                FIELD4 = #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                FIELD5 = #{field5,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vt.role.model.Role">
+        update T_PM_ROLE
+        set ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+        ROLE_DESC = #{roleDesc,jdbcType=VARCHAR},
+        MGR_ROLE_ID_LIST = #{mgrRoleIdList,jdbcType=VARCHAR},
+        STATUS = #{status,jdbcType=CHAR},
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+        LASTUP_DATE = #{lastupDate,jdbcType=DATE},
+        FIELD1 = #{field1,jdbcType=VARCHAR},
+        FIELD2 = #{field2,jdbcType=VARCHAR},
+        FIELD3 = #{field3,jdbcType=VARCHAR},
+        FIELD4 = #{field4,jdbcType=VARCHAR},
+        FIELD5 = #{field5,jdbcType=VARCHAR}
+        where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    </update>
+
+
+    <!-- delete roles by id -->
+    <delete id="deleteRolesById" parameterType="java.util.List">
+        delete from "t_pm_role"
+        where ROLE_ID IN
+        <foreach open="(" close=")" collection="list" item="roleId" separator=",">
+            #{roleId}
+        </foreach>
+    </delete>
+
+    <!-- 根据角色id查询对应操作员id列表 -->
+    <select id="selectOperatorsByRoleId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select
+        tporr.OPERATOR_ID
+        FROM "t_pm_oper_role_rel" tporr
+        left join t_pm_role tpr on tporr.ROLE_ID = tpr.ROLE_ID
+        where tpr.role_id = #{roleId,jdbcType=DECIMAL}
+    </select>
+</mapper>

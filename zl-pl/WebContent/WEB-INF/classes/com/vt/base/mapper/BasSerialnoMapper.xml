@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vt.base.client.BasSerialnoMapper">
+    <resultMap id="BaseResultMap" type="com.vt.base.model.BasSerialno">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="serialno_code" property="serialnoCode" jdbcType="VARCHAR"/>
+        <result column="buss_date" property="bussDate" jdbcType="DATE"/>
+        <result column="current_value" property="currentValue" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, serialno_code, buss_date, current_value
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vt.base.model.BasSerialnoExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_bas_serialno
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bas_serialno
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_bas_serialno
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vt.base.model.BasSerialnoExample">
+        delete from t_bas_serialno
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.base.model.BasSerialno">
+        insert into t_bas_serialno (id, serialno_code, buss_date,
+        current_value)
+        values (#{id,jdbcType=BIGINT}, #{serialnoCode,jdbcType=VARCHAR}, #{bussDate,jdbcType=DATE},
+        #{currentValue,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.base.model.BasSerialno">
+        insert into t_bas_serialno
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="serialnoCode != null">
+                serialno_code,
+            </if>
+            <if test="bussDate != null">
+                buss_date,
+            </if>
+            <if test="currentValue != null">
+                current_value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="serialnoCode != null">
+                #{serialnoCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bussDate != null">
+                #{bussDate,jdbcType=DATE},
+            </if>
+            <if test="currentValue != null">
+                #{currentValue,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.base.model.BasSerialnoExample" resultType="java.lang.Integer">
+        select count(*) from t_bas_serialno
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vt.base.model.BasSerialno">
+        update t_bas_serialno
+        <set>
+            <if test="serialnoCode != null">
+                serialno_code = #{serialnoCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bussDate != null">
+                buss_date = #{bussDate,jdbcType=DATE},
+            </if>
+            <if test="currentValue != null">
+                current_value = #{currentValue,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vt.base.model.BasSerialno">
+        update t_bas_serialno
+        set serialno_code = #{serialnoCode,jdbcType=VARCHAR},
+        buss_date = #{bussDate,jdbcType=DATE},
+        current_value = #{currentValue,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="zl-pl">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/base"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-generated"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-fencing"/>
+        <property name="context-root" value="zl-pl"/>
+        <property name="java-output-path" value="/zl-pl/build/classes"/>
+    </wb-module>
+</project-modules>

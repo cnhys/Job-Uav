@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vt.base.client.DictTypeMapper">
+    <resultMap id="BaseResultMap" type="com.vt.base.model.DictType">
+        <id column="TYPE_ID" property="typeId" jdbcType="DECIMAL"/>
+        <result column="DICT_TYPE_CODE" property="dictTypeCode" jdbcType="VARCHAR"/>
+        <result column="DICT_TYPE_NAME" property="dictTypeName" jdbcType="VARCHAR"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR"/>
+        <result column="DICT_LEVEL" property="dictLevel" jdbcType="DECIMAL"/>
+        <result column="SERIALNO" property="serialno" jdbcType="DECIMAL"/>
+        <result column="SEQ_ID" property="seqId" jdbcType="VARCHAR"/>
+        <result column="FIELD1" property="field1" jdbcType="VARCHAR"/>
+        <result column="FIELD2" property="field2" jdbcType="VARCHAR"/>
+        <result column="FIELD3" property="field3" jdbcType="VARCHAR"/>
+        <result column="FIELD4" property="field4" jdbcType="VARCHAR"/>
+        <result column="FIELD5" property="field5" jdbcType="VARCHAR"/>
+        <result column="FIELD6" property="field6" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        TYPE_ID, DICT_TYPE_CODE, DICT_TYPE_NAME, PARENT_ID, DICT_LEVEL, SERIALNO, SEQ_ID,
+        FIELD1, FIELD2, FIELD3, FIELD4, FIELD5, FIELD6
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vt.base.model.DictTypeExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from T_BAS_DICT_TYPE
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select
+        <include refid="Base_Column_List"/>
+        from T_BAS_DICT_TYPE
+        where TYPE_ID = #{typeId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+        delete from T_BAS_DICT_TYPE
+        where TYPE_ID = #{typeId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vt.base.model.DictTypeExample">
+        delete from T_BAS_DICT_TYPE
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.base.model.DictType">
+        insert into T_BAS_DICT_TYPE (TYPE_ID, DICT_TYPE_CODE, DICT_TYPE_NAME,
+        PARENT_ID, DICT_LEVEL, SERIALNO,
+        SEQ_ID, FIELD1, FIELD2,
+        FIELD3, FIELD4, FIELD5,
+        FIELD6)
+        values (#{typeId,jdbcType=DECIMAL}, #{dictTypeCode,jdbcType=VARCHAR}, #{dictTypeName,jdbcType=VARCHAR},
+        #{parentId,jdbcType=VARCHAR}, #{dictLevel,jdbcType=DECIMAL}, #{serialno,jdbcType=DECIMAL},
+        #{seqId,jdbcType=VARCHAR}, #{field1,jdbcType=VARCHAR}, #{field2,jdbcType=VARCHAR},
+        #{field3,jdbcType=VARCHAR}, #{field4,jdbcType=VARCHAR}, #{field5,jdbcType=VARCHAR},
+        #{field6,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.base.model.DictType">
+        insert into T_BAS_DICT_TYPE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                TYPE_ID,
+            </if>
+            <if test="dictTypeCode != null">
+                DICT_TYPE_CODE,
+            </if>
+            <if test="dictTypeName != null">
+                DICT_TYPE_NAME,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="dictLevel != null">
+                DICT_LEVEL,
+            </if>
+            <if test="serialno != null">
+                SERIALNO,
+            </if>
+            <if test="seqId != null">
+                SEQ_ID,
+            </if>
+            <if test="field1 != null">
+                FIELD1,
+            </if>
+            <if test="field2 != null">
+                FIELD2,
+            </if>
+            <if test="field3 != null">
+                FIELD3,
+            </if>
+            <if test="field4 != null">
+                FIELD4,
+            </if>
+            <if test="field5 != null">
+                FIELD5,
+            </if>
+            <if test="field6 != null">
+                FIELD6,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                #{typeId,jdbcType=DECIMAL},
+            </if>
+            <if test="dictTypeCode != null">
+                #{dictTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dictTypeName != null">
+                #{dictTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="dictLevel != null">
+                #{dictLevel,jdbcType=DECIMAL},
+            </if>
+            <if test="serialno != null">
+                #{serialno,jdbcType=DECIMAL},
+            </if>
+            <if test="seqId != null">
+                #{seqId,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                #{field6,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.base.model.DictTypeExample" resultType="java.lang.Integer">
+        select count(*) from T_BAS_DICT_TYPE
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vt.base.model.DictType">
+        update T_BAS_DICT_TYPE
+        <set>
+            <if test="dictTypeCode != null">
+                DICT_TYPE_CODE = #{dictTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dictTypeName != null">
+                DICT_TYPE_NAME = #{dictTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="dictLevel != null">
+                DICT_LEVEL = #{dictLevel,jdbcType=DECIMAL},
+            </if>
+            <if test="serialno != null">
+                SERIALNO = #{serialno,jdbcType=DECIMAL},
+            </if>
+            <if test="seqId != null">
+                SEQ_ID = #{seqId,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                FIELD1 = #{field1,jdbcType=VARCHAR},
+            </if>
+            <if test="field2 != null">
+                FIELD2 = #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                FIELD3 = #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                FIELD4 = #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                FIELD5 = #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                FIELD6 = #{field6,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TYPE_ID = #{typeId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vt.base.model.DictType">
+        update T_BAS_DICT_TYPE
+        set DICT_TYPE_CODE = #{dictTypeCode,jdbcType=VARCHAR},
+        DICT_TYPE_NAME = #{dictTypeName,jdbcType=VARCHAR},
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+        DICT_LEVEL = #{dictLevel,jdbcType=DECIMAL},
+        SERIALNO = #{serialno,jdbcType=DECIMAL},
+        SEQ_ID = #{seqId,jdbcType=VARCHAR},
+        FIELD1 = #{field1,jdbcType=VARCHAR},
+        FIELD2 = #{field2,jdbcType=VARCHAR},
+        FIELD3 = #{field3,jdbcType=VARCHAR},
+        FIELD4 = #{field4,jdbcType=VARCHAR},
+        FIELD5 = #{field5,jdbcType=VARCHAR},
+        FIELD6 = #{field6,jdbcType=VARCHAR}
+        where TYPE_ID = #{typeId,jdbcType=DECIMAL}
+    </update>
+
+    <update id="updateDictTypeByCode" parameterType="com.vt.base.model.DictType">
+        update T_BAS_DICT_TYPE
+        set DICT_TYPE_NAME = #{dictTypeName,jdbcType=VARCHAR}
+        where DICT_TYPE_CODE = #{dictTypeCode,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

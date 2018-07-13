@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vt.base.client.ParamMapper">
+    <resultMap id="BaseResultMap" type="com.vt.base.model.Param">
+        <id column="PARAM_NAME" jdbcType="VARCHAR" property="paramName"/>
+        <result column="PARAM_VALUE" jdbcType="VARCHAR" property="paramValue"/>
+        <result column="PARAM_DESC" jdbcType="VARCHAR" property="paramDesc"/>
+        <result column="SERIALNO" jdbcType="DECIMAL" property="serialno"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
+        <result column="PARAM_TYPE" jdbcType="VARCHAR" property="paramType"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="FIELD1" jdbcType="DECIMAL" property="field1"/>
+        <result column="FIELD2" jdbcType="VARCHAR" property="field2"/>
+        <result column="FIELD3" jdbcType="VARCHAR" property="field3"/>
+        <result column="FIELD4" jdbcType="VARCHAR" property="field4"/>
+        <result column="FIELD5" jdbcType="VARCHAR" property="field5"/>
+        <result column="FIELD6" jdbcType="VARCHAR" property="field6"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        PARAM_NAME, PARAM_VALUE, PARAM_DESC, SERIALNO, STATUS, PARAM_TYPE, REMARK, FIELD1,
+        FIELD2, FIELD3, FIELD4, FIELD5, FIELD6
+    </sql>
+    <select id="selectByExample" parameterType="com.vt.base.model.ParamExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from T_BAS_PARAM
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from T_BAS_PARAM
+        where PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from T_BAS_PARAM
+        where PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.vt.base.model.ParamExample">
+        delete from T_BAS_PARAM
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.vt.base.model.Param">
+        insert into T_BAS_PARAM (PARAM_NAME, PARAM_VALUE, PARAM_DESC,
+        SERIALNO, STATUS, PARAM_TYPE,
+        REMARK, FIELD1, FIELD2,
+        FIELD3, FIELD4, FIELD5,
+        FIELD6)
+        values (#{paramName,jdbcType=VARCHAR}, #{paramValue,jdbcType=VARCHAR}, #{paramDesc,jdbcType=VARCHAR},
+        #{serialno,jdbcType=DECIMAL}, #{status,jdbcType=CHAR}, #{paramType,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR}, #{field1,jdbcType=DECIMAL}, #{field2,jdbcType=VARCHAR},
+        #{field3,jdbcType=VARCHAR}, #{field4,jdbcType=VARCHAR}, #{field5,jdbcType=VARCHAR},
+        #{field6,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.vt.base.model.Param">
+        insert into T_BAS_PARAM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paramName != null">
+                PARAM_NAME,
+            </if>
+            <if test="paramValue != null">
+                PARAM_VALUE,
+            </if>
+            <if test="paramDesc != null">
+                PARAM_DESC,
+            </if>
+            <if test="serialno != null">
+                SERIALNO,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="paramType != null">
+                PARAM_TYPE,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="field1 != null">
+                FIELD1,
+            </if>
+            <if test="field2 != null">
+                FIELD2,
+            </if>
+            <if test="field3 != null">
+                FIELD3,
+            </if>
+            <if test="field4 != null">
+                FIELD4,
+            </if>
+            <if test="field5 != null">
+                FIELD5,
+            </if>
+            <if test="field6 != null">
+                FIELD6,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paramName != null">
+                #{paramName,jdbcType=VARCHAR},
+            </if>
+            <if test="paramValue != null">
+                #{paramValue,jdbcType=VARCHAR},
+            </if>
+            <if test="paramDesc != null">
+                #{paramDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="serialno != null">
+                #{serialno,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="paramType != null">
+                #{paramType,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                #{field1,jdbcType=DECIMAL},
+            </if>
+            <if test="field2 != null">
+                #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                #{field6,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.vt.base.model.ParamExample" resultType="java.lang.Integer">
+        select count(*) from T_BAS_PARAM
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vt.base.model.Param">
+        update T_BAS_PARAM
+        <set>
+            <if test="paramValue != null">
+                PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+            </if>
+            <if test="paramDesc != null">
+                PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="serialno != null">
+                SERIALNO = #{serialno,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+            <if test="paramType != null">
+                PARAM_TYPE = #{paramType,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="field1 != null">
+                FIELD1 = #{field1,jdbcType=DECIMAL},
+            </if>
+            <if test="field2 != null">
+                FIELD2 = #{field2,jdbcType=VARCHAR},
+            </if>
+            <if test="field3 != null">
+                FIELD3 = #{field3,jdbcType=VARCHAR},
+            </if>
+            <if test="field4 != null">
+                FIELD4 = #{field4,jdbcType=VARCHAR},
+            </if>
+            <if test="field5 != null">
+                FIELD5 = #{field5,jdbcType=VARCHAR},
+            </if>
+            <if test="field6 != null">
+                FIELD6 = #{field6,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vt.base.model.Param">
+        update T_BAS_PARAM
+        set PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+        PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+        SERIALNO = #{serialno,jdbcType=DECIMAL},
+        STATUS = #{status,jdbcType=CHAR},
+        PARAM_TYPE = #{paramType,jdbcType=VARCHAR},
+        REMARK = #{remark,jdbcType=VARCHAR},
+        FIELD1 = #{field1,jdbcType=DECIMAL},
+        FIELD2 = #{field2,jdbcType=VARCHAR},
+        FIELD3 = #{field3,jdbcType=VARCHAR},
+        FIELD4 = #{field4,jdbcType=VARCHAR},
+        FIELD5 = #{field5,jdbcType=VARCHAR},
+        FIELD6 = #{field6,jdbcType=VARCHAR}
+        where PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateParamValueByPrimaryKey" parameterType="com.vt.base.model.Param">
+        update T_BAS_PARAM
+        set PARAM_VALUE = #{paramValue,jdbcType=VARCHAR}
+        where PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+    </update>
+    
+    <!-- 批量修改参数 -->
+    <update id="updateParamBatch" parameterType="java.util.List">
+    	<foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+    		update T_BAS_PARAM
+    		<set>
+    		 PARAM_VALUE = '${item.paramValue}'
+    		</set>
+    		where PARAM_NAME = '${item.paramName}'
+    	</foreach>
+    </update>
+    
+
+</mapper>
